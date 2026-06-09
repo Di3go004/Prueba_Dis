@@ -1,0 +1,27 @@
+meta {
+  name: Modificar
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{base_url}}/products/modificar/9d6a0f84-58bc-4af6-8eed-166a1904d339
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzOWY0NTcwLTE0ODQtNGZmOC1hZjRlLWZlMTE0ZmM0MjViOCIsImVtYWlsIjoiZGllZ29AZGlzYWdybzQuY29tIiwiaWF0IjoxNzgwOTc2NDQ0LCJleHAiOjE3ODEwNjI4NDR9.T0KEt3lm19na-sUiRU2cmVFWVSAd2dnshlzT2hA6wVQ
+}
+
+body:json {
+  {
+    "precio": 275.00,
+    "descripcion": "Descripción actualizada"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

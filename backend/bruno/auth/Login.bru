@@ -1,0 +1,27 @@
+meta {
+  name: Login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/auth/login
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM3YjJmNDg3LTk3MDYtNDI0OC1iNTM0LTRiNTM3ZWJkYzllNiIsImVtYWlsIjoiZGllZ29AcHJ1ZWJhIiwiaWF0IjoxNzgwOTU2MzMzLCJleHAiOjE3ODEwNDI3MzN9.HT3sfFp8ffMM1vTL-LYC467aXnyjcJdv78bY2Rh7PTc
+}
+
+body:json {
+  {
+    "email" : "diego1@prueba",
+    "password": "123"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

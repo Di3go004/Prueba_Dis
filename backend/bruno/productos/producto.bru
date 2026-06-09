@@ -1,0 +1,24 @@
+meta {
+  name: producto
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/products/producto/id
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzOWY0NTcwLTE0ODQtNGZmOC1hZjRlLWZlMTE0ZmM0MjViOCIsImVtYWlsIjoiZGllZ29AZGlzYWdybzQuY29tIiwiaWF0IjoxNzgwOTc2NDQ0LCJleHAiOjE3ODEwNjI4NDR9.T0KEt3lm19na-sUiRU2cmVFWVSAd2dnshlzT2hA6wVQ
+}
+
+vars:pre-request {
+  id: 1
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
