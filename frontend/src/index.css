@@ -1,1 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────── */
+@theme {
+  --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+  /* Agro Green */
+  --color-agro:        #179B44;
+  --color-agro-dark:   #006b2a;
+  --color-agro-hover:  #138a3a;
+  --color-agro-light:  #e8f5ee;
+  --color-agro-border: #a7d9b8;
+
+  /* Harvest Gold */
+  --color-gold:        #FAD316;
+  --color-gold-light:  #fef9e0;
+
+  /* Surface */
+  --color-surface:     #F8FAFC;
+  --color-surface-card:#ffffff;
+  --color-border:      #E2E8F0;
+  --color-border-input:#CBD5E1;
+
+  /* Slate (text & structure) */
+  --color-slate-900:   #0F172A;
+  --color-slate-700:   #334155;
+  --color-slate-500:   #64748B;
+  --color-slate-300:   #CBD5E1;
+  --color-slate-100:   #F1F5F9;
+  --color-slate-50:    #F8FAFC;
+
+  /* Sidebar */
+  --color-sidebar-bg:  #ffffff;
+  --color-sidebar-active-bg: #e8f5ee;
+  --color-sidebar-active-text: #006b2a;
+
+  /* Status */
+  --color-error:       #ba1a1a;
+  --color-error-light: #ffdad6;
+  --color-success:     #006b2a;
+}
+
+/* ─── Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { height: 100%; }
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-surface);
+  color: var(--color-slate-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root { height: 100%; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}

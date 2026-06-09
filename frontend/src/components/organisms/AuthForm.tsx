@@ -10,34 +10,32 @@ export const AuthForm = () => {
   const { login } = useAuth()
   const [mode, setMode] = useState<Mode>('login')
   const [form, setForm] = useState({ nombre: '', email: '', password: '' })
-  const [errors, setErrors] = useState<typeof form>({ nombre: '', email: '', password: '' })
+  const [errors, setErrors] = useState({ nombre: '', email: '', password: '' })
   const [isLoading, setIsLoading] = useState(false)
   const [apiError, setApiError] = useState('')
 
-  const handleChange = (field: keyof typeof form) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setForm((prev) => ({ ...prev, [field]: e.target.value }))
-    setErrors((prev) => ({ ...prev, [field]: '' }))
-    setApiError('')
+  const change = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm(p => ({ ...p, [field]: e.target.value }))
+    setErrors(p => ({ ...p, [field]: '' }))
   }
 
-  const validate = (): boolean => {
-    const newErrors = { nombre: '', email: '', password: '' }
+  const validate = () => {
+    const e = { nombre: '', email: '', password: '' }
     if (mode === 'register' && form.nombre.trim().length < 2)
-      newErrors.nombre = 'El nombre debe tener al menos 2 caracteres'
+      e.nombre = 'Mínimo 2 caracteres'
     if (!form.email.includes('@'))
-      newErrors.email = 'Email inválido'
+      e.email = 'Email inválido'
     if (form.password.length < 6)
-      newErrors.password = 'La contraseña debe tener al menos 6 caracteres'
-    setErrors(newErrors)
-    return !Object.values(newErrors).some(Boolean)
+      e.password = 'Mínimo 6 caracteres'
+    setErrors(e)
+    return !Object.values(e).some(Boolean)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
     setIsLoading(true)
+    setApiError('')
     try {
       const result = mode === 'login'
         ? await loginApi({ email: form.email, password: form.password })
@@ -54,82 +52,68 @@ export const AuthForm = () => {
     }
   }
 
-  const toggleMode = () => {
-    setMode((m) => (m === 'login' ? 'register' : 'login'))
+  const toggle = () => {
+    setMode(m => m === 'login' ? 'register' : 'login')
     setForm({ nombre: '', email: '', password: '' })
     setErrors({ nombre: '', email: '', password: '' })
     setApiError('')
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        {/* Logo */}
-        <div className="flex justify-center mb-6">
-          <div className="h-12 w-12 rounded-xl bg-green-600 flex items-center justify-center">
-            <span className="text-white text-xl font-bold">D</span>
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
+      <div className="w-full max-w-sm">
+        {/* Card */}
+        <div className="bg-white rounded-2xl border border-border shadow-[0px_10px_30px_rgba(15,23,42,0.1)] px-8 py-9">
+          {/* Logo */}
+          <div className="flex justify-center mb-7">
+            <div className="h-14 w-14 rounded-2xl bg-agro flex items-center justify-center shadow-sm">
+              <span className="text-white text-2xl font-bold font-display">D</span>
+            </div>
           </div>
+
+          {/* Heading */}
+          <h1 className="font-display text-2xl font-semibold text-slate-900 text-center mb-1">
+            {mode === 'login' ? 'Bienvenido' : 'Crear cuenta'}
+          </h1>
+          <p className="text-sm text-slate-400 text-center mb-7">
+            {mode === 'login' ? 'Accede al catálogo de Disagro' : 'Regístrate para continuar'}
+          </p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {mode === 'register' && (
+              <FormField id="nombre" label="Nombre completo" placeholder="Tu nombre"
+                value={form.nombre} onChange={change('nombre')} error={errors.nombre} required />
+            )}
+            <FormField id="email" label="Correo electrónico" type="email"
+              placeholder="correo@ejemplo.com"
+              value={form.email} onChange={change('email')} error={errors.email} required />
+            <FormField id="password" label="Contraseña" type="password"
+              placeholder="••••••••"
+              value={form.password} onChange={change('password')} error={errors.password} required />
+
+            {apiError && (
+              <div className="rounded-lg bg-error-light border border-red-200 px-3 py-2.5 text-sm text-error">
+                {apiError}
+              </div>
+            )}
+
+            <Button type="submit" isLoading={isLoading} size="lg" className="w-full mt-1">
+              {mode === 'login' ? 'Ingresar' : 'Registrarse'}
+            </Button>
+          </form>
+
+          <p className="text-sm text-slate-400 text-center mt-6">
+            {mode === 'login' ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}{' '}
+            <button onClick={toggle}
+              className="text-agro font-semibold hover:text-agro-dark transition-colors cursor-pointer">
+              {mode === 'login' ? 'Regístrate' : 'Inicia sesión'}
+            </button>
+          </p>
         </div>
 
-        <h2 className="text-xl font-semibold text-gray-900 text-center mb-1">
-          {mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}
-        </h2>
-        <p className="text-sm text-gray-400 text-center mb-6">
-          {mode === 'login' ? 'Accede al catálogo de Disagro' : 'Regístrate para continuar'}
-        </p>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {mode === 'register' && (
-            <FormField
-              id="nombre"
-              label="Nombre"
-              placeholder="Tu nombre completo"
-              value={form.nombre}
-              onChange={handleChange('nombre')}
-              error={errors.nombre}
-              required
-            />
-          )}
-          <FormField
-            id="email"
-            label="Email"
-            type="email"
-            placeholder="correo@ejemplo.com"
-            value={form.email}
-            onChange={handleChange('email')}
-            error={errors.email}
-            required
-          />
-          <FormField
-            id="password"
-            label="Contraseña"
-            type="password"
-            placeholder="••••••••"
-            value={form.password}
-            onChange={handleChange('password')}
-            error={errors.password}
-            required
-          />
-
-          {apiError && (
-            <p className="text-sm text-red-500 bg-red-50 rounded-lg px-3 py-2">
-              {apiError}
-            </p>
-          )}
-
-          <Button type="submit" isLoading={isLoading} className="w-full mt-1">
-            {mode === 'login' ? 'Ingresar' : 'Registrarse'}
-          </Button>
-        </form>
-
-        <p className="text-sm text-gray-500 text-center mt-6">
-          {mode === 'login' ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}{' '}
-          <button
-            onClick={toggleMode}
-            className="text-green-600 font-medium hover:underline cursor-pointer"
-          >
-            {mode === 'login' ? 'Regístrate' : 'Inicia sesión'}
-          </button>
+        {/* Footer */}
+        <p className="text-center text-xs text-slate-300 mt-5">
+          Disagro · Catálogo Digital © {new Date().getFullYear()}
         </p>
       </div>
     </div>
