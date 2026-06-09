@@ -20,10 +20,15 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const hasToken = !!localStorage.getItem('token')
+    const isAuthEndpoint = error.config?.url?.includes('/auth/')
+
+    // Solo redirigir si la sesión expiró (hay token pero el backend rechaza).
+    // NO redirigir en endpoints de login/register — ahí el 401 es normal.
+    if (error.response?.status === 401 && hasToken && !isAuthEndpoint) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
-      window.location.href = '/login'
+      window.location.href = '/'
     }
     return Promise.reject(error)
   }

@@ -5,24 +5,19 @@ interface BadgeProps {
   className?: string
 }
 
+// Pill-shaped badges: low-saturation bg + high-saturation text (per DESIGN.md)
 const colorMap: Record<string, string> = {
-  Fertilizantes: 'bg-green-100 text-green-700 ring-green-200',
-  Maquinaria:    'bg-blue-100 text-blue-700 ring-blue-200',
-  Semillas:      'bg-yellow-100 text-yellow-700 ring-yellow-200',
-  Agroquimicos:  'bg-purple-100 text-purple-700 ring-purple-200',
+  Fertilizantes: 'bg-agro-light text-agro-dark border border-agro-border',
+  Maquinaria:    'bg-blue-50 text-blue-700 border border-blue-200',
+  Semillas:      'bg-gold-light text-yellow-800 border border-yellow-300',
+  Agroquimicos:  'bg-purple-50 text-purple-700 border border-purple-200',
 }
 
 export const Badge = ({ categoria, className = '' }: BadgeProps) => {
-  const colors = colorMap[categoria] ?? 'bg-gray-100 text-gray-700 ring-gray-200'
+  const colors = colorMap[categoria] ?? 'bg-slate-100 text-slate-600 border border-slate-200'
 
   return (
-    <span
-      className={`
-        inline-flex items-center rounded-full px-2.5 py-0.5
-        text-xs font-medium ring-1 ring-inset
-        ${colors} ${className}
-      `}
-    >
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${colors} ${className}`}>
       {categoria}
     </span>
   )

@@ -1,9 +1,11 @@
+import { useAuth } from './context/AuthContext'
+import { AuthForm } from './components/organisms/AuthForm'
+import { ProductsPage } from './pages/ProductsPage'
+
 function App() {
-  return (
-    <div className="bg-blue-500">
-      Tailwind v4 funcionando
-    </div>
-  )
+  const { isAuthenticated } = useAuth()
+
+  return isAuthenticated ? <ProductsPage /> : <AuthForm />
 }
 
 export default App
