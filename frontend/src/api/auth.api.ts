@@ -6,7 +6,7 @@ export const registerApi = async (data: {
   email: string
   password: string
 }): Promise<AuthResponse> => {
-  const response = await api.post<ApiResponse<AuthResponse>>('/auth/register', data)
+  const response = await api.post<ApiResponse<AuthResponse>>('/auth/registrar', data)
   return response.data.data!
 }
 
