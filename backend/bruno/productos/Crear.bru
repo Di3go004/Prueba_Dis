@@ -1,0 +1,30 @@
+meta {
+  name: Crear
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/products/crear
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzOWY0NTcwLTE0ODQtNGZmOC1hZjRlLWZlMTE0ZmM0MjViOCIsImVtYWlsIjoiZGllZ29AZGlzYWdybzQuY29tIiwiaWF0IjoxNzgwOTc2NDQ0LCJleHAiOjE3ODEwNjI4NDR9.T0KEt3lm19na-sUiRU2cmVFWVSAd2dnshlzT2hA6wVQ
+}
+
+body:json {
+  {
+    "codigo": "FERT-001",
+    "nombre": "Fertilizante Urea 46%",
+    "descripcion": "Fertilizante nitrogenado de alta concentración para cultivos",
+    "precio": 250.00,
+    "categoria": "Fertilizantes"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
